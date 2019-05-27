@@ -9,21 +9,46 @@ void cbc()
 	printf("\n");
 }
 //Opções
-void opc()
+int opc()
 {
 	cbc();
+	int user;
 	printf("\t 1 - Abrir imagem PPM\n");
-	printf("\t 2 - Criar imagem PPM\n");
+	printf("\t 0 - Encerrar Programa\n");
+	printf("Opção: ");
+	scanf("%d", &user);
+	while(user!=1 && user!=0)
+	{
+		printf("Opção Invalida. Digite novamente \n");
+		printf("Opção: ");
+		scanf("%d", &user);
+	}
+	if(user == 0)
+	{
+		printf("\33[H\33[2J");
+		cbc();
+		printf("Programa Encerrado!\n");
+		exit(0);
+	}
+	
+	if(user == 1)
+	{
+		printf("\33[H\33[2J");
+		return 1;
+		
+	}
+	return 0;
+
 	printf("\n");
 }
 //Tela Inicial
-void tela_inicio( )
-{
+int tela_inicio()
+{	
+	printf("\33[H\33[2J");
 	int op;
 	cbc();
-	printf("1 - Iniciar\n");
-	printf("0 - Sair\n");
-	printf("\n");
+	printf("\t 1 - Iniciar\n");
+	printf("\t 0 - Sair\n");
 	printf("Opção: ");
 	scanf("%d", &op);
 	while(op!=1 && op!=0)
@@ -34,16 +59,15 @@ void tela_inicio( )
 	}
 	if(op == 0)
 	{
-		printf("\33[H\33[2J");
-		printf("Programa Encerrado!");
-		exit(0);
+		return 0;
 	}
 	
 	if(op == 1)
 	{
 		printf("\33[H\33[2J");
-		opc();
+		return opc();
 		
 	}
+	return 0;
 	
 }

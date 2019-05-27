@@ -2,5 +2,5 @@
 #include <stdlib.h>
 
 void cbc();
-void opc();
-void tela_inicio();
+int opc();
+int tela_inicio();
