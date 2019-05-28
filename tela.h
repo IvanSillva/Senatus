@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void cbc();
-int opc();
-int tela_inicio();
+void cbc(); //Cabeçalho
+int opc();	//Lista de opções
+int tela_inicio(); //Tela Inicial

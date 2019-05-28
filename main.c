@@ -5,7 +5,7 @@
 
 int main()
 {
-	//tela_inicio();
+	
 	pxl img[MAX][MAX];
 	char cod[3];
 	int lmt;
@@ -15,12 +15,13 @@ int main()
 
 	if(temp == 1){
 	read(img, cod, &lmt, &lrg, &alt);
-	}else if(temp == 0){
-		printf("\33[H\33[2J");
-		cbc();
-		printf("Programa Encerrado!\n");
-		exit(0);
+		}else if(temp == 0)
+			{
+			printf("\33[H\33[2J");
+			cbc();
+			printf("Programa Encerrado!\n");
+			exit(0);
 
-	}
-	return 0;
-}
+			}
+				return 0;
+		}

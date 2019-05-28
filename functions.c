@@ -16,7 +16,10 @@ void read(pxl img[MAX][MAX], char *cod, int *lmt, int *cl, int*ln)
 
 	if( archive == NULL ) 
 	{
-		printf( "Erro na abertura do arquivo!\n" );
+		printf("Arquivo não existente, tente novamente!\n" );
+		/*printf("Digite o nome do Arquivo:\n");
+		scanf(" %s", name_archive);
+		FILE *archive = fopen(name_archive,"r");*/
 		exit(1);
 	}
 
