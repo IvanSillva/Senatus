@@ -2,6 +2,7 @@
 //Cabeçalho
 void cbc()
 {
+	printf("\33[H\33[2J");
 	printf("======================================= \n");
 	printf("\t\tSENATUS\n");
 	printf("\t     (Image Editor)\n");
@@ -70,4 +71,18 @@ int tela_inicio()
 	}
 	return 0;
 	
+}
+
+void cmd()
+{
+	cbc();
+	printf("\t   OPÇÕES DE COMANDO:\n\n");
+	printf(" ‘gry’: Executa grey mode\n");
+	printf(" ‘thr’: Binarização da imagem usando thresholding\n");
+	printf(" ‘blu’: Executa blurring\n");
+	printf(" ‘sha’: Executa sharpening\n");
+	printf(" 'rot': Rotação da imagem, dado o ângulo\n");
+	printf(" 'amp’: Ampliar a imagem, dado o zoom.\n");
+	printf(" ‘red’: Reduzir a imagem, dado o zoom.\n");
+
 }
