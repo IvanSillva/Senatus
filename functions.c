@@ -5,7 +5,7 @@ void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	cbc();
 	int i, j;
 
-	char name_archive[50];
+	char name_archive[60];
 
 	printf("Digite o nome do Arquivo:\n");
 
@@ -42,6 +42,48 @@ void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	options(img, cod, lmt, cl, ln);
 }
 
+void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
+{
+	int i, j;
+
+	char name_archive[60];
+
+	printf(" Digite o nome do novo Arquivo: ");
+	scanf("%s", name_archive);
+	FILE *test = fopen(name_archive,"r+");
+	while(test != NULL){
+		printf("\n Arquivo '%s' já existe!!\n", name_archive);
+		printf(" Digite o nome do novo Arquivo: ");
+		scanf("%s", name_archive);
+		test = fopen(name_archive,"r+");
+	}
+	FILE *archive = fopen(name_archive,"w");
+
+	fprintf(archive, "P3\n");
+	fprintf(archive, "%d ", cl);
+	fprintf(archive, "%d\n", ln);
+	fprintf(archive, "%d\n", lmt);
+
+	for(i = 0; i < ln; i++)
+	{
+		for(j = 0; j < cl; j++)
+		{
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d \n", img[i][j].B);
+		}
+	}
+
+
+
+
+
+	fclose(archive);
+
+
+
+}
+
 void grey (pxl img[DIM][DIM], int *cl, int *ln)
 {
 
@@ -64,14 +106,13 @@ void grey (pxl img[DIM][DIM], int *cl, int *ln)
 				img[i][j].B = 255;
 
 			}
-			printf("%d\n", img[i][j].R);
+
+			/*printf("%d\n", img[i][j].R);
 			printf("%d\n", img[i][j].G);
 			printf("%d\n", img[i][j].B);
-			printf("\n");
+			printf("\n");*/
 		}
 	}
-
-
 
 
 }
@@ -83,21 +124,45 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 {
 	cmd();
 
-	char acao[3];
+	int acao;
 	printf("\n");
 	printf(" Informe o comando: ");
-	scanf("%s", &acao);
-	
+	scanf("%d", &acao);
 
-	grey(img,*cl,*ln);
-	/*switch(acao)
+	//grey(img,*cl,*ln);
+	//save(img,*lmt,*cl,*ln);
+	switch(acao)
 	{
 
-		case 'gry':
-		grey();
-	}*/
+		case 1:
+		grey(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
+		break;
+
+		case 2:
+		break;
+
+		case 3:
+		break;
+
+		case 4:
+		break;
+
+		case 5:
+		break;
+
+		case 6:
+		break;
+
+		case 7:
+		break;
+
+
+	    default :
+    	printf ("Valor invalido!\n");
+
+	}
 
 
 }
 	
-

@@ -77,12 +77,12 @@ void cmd()
 {
 	cbc();
 	printf("\t   OPÇÕES DE COMANDO:\n\n");
-	printf(" ‘gry’: Executa grey mode\n");
-	printf(" ‘thr’: Binarização da imagem usando thresholding\n");
-	printf(" ‘blu’: Executa blurring\n");
-	printf(" ‘sha’: Executa sharpening\n");
-	printf(" 'rot': Rotação da imagem, dado o ângulo\n");
-	printf(" 'amp’: Ampliar a imagem, dado o zoom.\n");
-	printf(" ‘red’: Reduzir a imagem, dado o zoom.\n");
+	printf(" 1 - ‘gry’(Executa grey mode)\n");
+	printf(" 2 - ‘thr’(Binarização da imagem usando thresholding)\n");
+	printf(" 3 - ‘blu’(Executa blurring)\n");
+	printf(" 4 - ‘sha’(Executa sharpening)\n");
+	printf(" 5 - 'rot'(Rotação da imagem, dado o ângulo)\n");
+	printf(" 6 - 'amp’(Ampliar a imagem, dado o zoom)\n");
+	printf(" 7 - ‘red’(Reduzir a imagem, dado o zoom)\n");
 
 }
