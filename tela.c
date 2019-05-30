@@ -86,3 +86,11 @@ void cmd()
 	printf(" 7 - ‘red’(Reduzir a imagem, dado o zoom)\n");
 
 }
+
+void vsl(char name_archive[500])
+{
+	char comando[500];
+	strcpy(comando, "eog ");
+	strcat(comando, name_archive);
+	system(comando);
+}

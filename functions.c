@@ -47,16 +47,17 @@ void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	int i, j;
 
 	char name_archive[60];
-
+	printf("\n");
 	printf(" Digite o nome do novo Arquivo: ");
 	scanf("%s", name_archive);
 	FILE *test = fopen(name_archive,"r+");
 	while(test != NULL){
-		printf("\n Arquivo '%s' já existe!!\n", name_archive);
+		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
 		printf(" Digite o nome do novo Arquivo: ");
 		scanf("%s", name_archive);
 		test = fopen(name_archive,"r+");
 	}
+
 	FILE *archive = fopen(name_archive,"w");
 
 	fprintf(archive, "P3\n");
@@ -74,18 +75,16 @@ void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
 		}
 	}
 
-
-
-
-
 	fclose(archive);
 
-
-
+	printf("\n");
+	printf(" Arquivo salvo com sucesso!\n");
+	vsl(name_archive);
 }
 
 void grey (pxl img[DIM][DIM], int *cl, int *ln)
 {
+	
 
 	int j, i;
 
@@ -128,7 +127,10 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	printf("\n");
 	printf(" Informe o comando: ");
 	scanf("%d", &acao);
-
+	while(acao<1 || acao>7){
+		printf(" Informe o comando: ");
+		scanf("%d", &acao);
+	}
 	//grey(img,*cl,*ln);
 	//save(img,*lmt,*cl,*ln);
 	switch(acao)
