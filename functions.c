@@ -82,7 +82,7 @@ void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-void grey (pxl img[DIM][DIM], int *cl, int *ln)
+void grey (pxl img[DIM][DIM], int cl, int ln)
 {
 	
 

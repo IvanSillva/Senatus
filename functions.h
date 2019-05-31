@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "tela.h"
 #define DIM 600
 
@@ -12,5 +13,5 @@ typedef struct
 //Ler Imagem, e por na matriz.
 void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln);
 void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln);
-void grey (pxl img[DIM][DIM], int *cl, int *ln);
+void grey (pxl img[DIM][DIM], int cl, int ln);
 void save(pxl img[DIM][DIM], int lmt, int cl, int ln);
