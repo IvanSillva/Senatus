@@ -15,3 +15,5 @@ void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln);
 void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln);
 void grey (pxl img[DIM][DIM], int cl, int ln);
 void save(pxl img[DIM][DIM], int lmt, int cl, int ln);
+void rot(pxl img[DIM][DIM], int lmt, int cl, int ln);
+void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln);

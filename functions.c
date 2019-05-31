@@ -116,6 +116,136 @@ void grey (pxl img[DIM][DIM], int cl, int ln)
 
 }
 
+void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
+{
+	int i, j;
+
+	char name_archive[60];
+	printf("\n");
+	printf(" Digite o nome do novo Arquivo: ");
+	scanf("%s", name_archive);
+	FILE *test = fopen(name_archive,"r+");
+	while(test != NULL){
+		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
+		printf(" Digite o nome do novo Arquivo: ");
+		scanf("%s", name_archive);
+		test = fopen(name_archive,"r+");
+	}
+
+	FILE *archive = fopen(name_archive,"w");
+
+	fprintf(archive, "P3\n");
+	fprintf(archive, "%d ", ln);
+	fprintf(archive, "%d\n", cl);
+	fprintf(archive, "%d\n", lmt);
+
+	for(i = ln; i >0; i--)
+	{
+		for(j = cl; j > 0; j--)
+		{
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d \n", img[i][j].B);
+		}
+	}
+
+	fclose(archive);
+
+	printf("\n");
+	printf(" Arquivo salvo com sucesso!\n");
+	vsl(name_archive);
+}
+
+
+void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
+{
+	int i, j;
+
+	char name_archive[60];
+	printf("\n");
+	printf(" Digite o nome do novo Arquivo: ");
+	scanf("%s", name_archive);
+	FILE *test = fopen(name_archive,"r+");
+	while(test != NULL){
+		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
+		printf(" Digite o nome do novo Arquivo: ");
+		scanf("%s", name_archive);
+		test = fopen(name_archive,"r+");
+	}
+
+	FILE *archive = fopen(name_archive,"w");
+
+	fprintf(archive, "P3\n");
+	fprintf(archive, "%d ", cl/2);
+	fprintf(archive, "%d\n", ln/2);
+	fprintf(archive, "%d\n", lmt);
+
+	for(i = 0; i < ln; i++)
+	{	
+		i++;
+		for(j = 0; j < cl; j++)
+		{	
+			j++;
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d \n", img[i][j].B);
+		}
+	}
+}
+void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
+{
+	int i, j;
+	int a = 0, b = 0;
+
+	char name_archive[60];
+	printf("\n");
+	printf(" Digite o nome do novo Arquivo: ");
+	scanf("%s", name_archive);
+	FILE *test = fopen(name_archive,"r+");
+	while(test != NULL){
+		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
+		printf(" Digite o nome do novo Arquivo: ");
+		scanf("%s", name_archive);
+		test = fopen(name_archive,"r+");
+	}
+
+	FILE *archive = fopen(name_archive,"w");
+
+	fprintf(archive, "P3\n");
+	fprintf(archive, "%d ", cl*2);
+	fprintf(archive, "%d\n", ln*2);
+	fprintf(archive, "%d\n", lmt);
+	cl *= 2;
+	ln *= 2;
+	for(i = 0; i < ln; i++)
+	{
+		for(j = 0; j < cl; j++)
+		{	
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d ", img[i][j].B);
+			fprintf(archive,"%d \n", img[i][j].B);
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].R);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d ", img[i][j].G);
+			fprintf(archive,"%d ", img[i][j].B);
+			fprintf(archive,"%d \n", img[i][j].B);
+		}
+	}
+	fclose(archive);
+
+	printf("\n");
+	printf(" Arquivo salvo com sucesso!\n");
+	vsl(name_archive);
+}
+
+
+
+
+
 
 
 
@@ -142,6 +272,7 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 2:
+		rot(img,*lmt,*cl,*ln);
 		break;
 
 		case 3:
@@ -154,9 +285,11 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 6:
+		amp(img,*lmt,*cl,*ln);
 		break;
 
 		case 7:
+		rdz(img,*lmt,*cl,*ln);
 		break;
 
 
