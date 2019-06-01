@@ -120,17 +120,36 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 {
 	int i, j;
 
+	int ang;
+	printf("\n");
+	printf(" 1 - Direita | 2 - Esquerda | 3 - Inverter\n");
+	printf("\n");
+	printf(" Informe a orientação: ");
+
+	scanf("%d", &ang);
+
+	while (ang > 3 || ang <1)
+	{
+		printf(" Opção Invalida! \n");
+		printf(" Informe a orientação: ");
+		scanf("%d", &ang);
+	}
+
 	char name_archive[60];
+
 	printf("\n");
 	printf(" Digite o nome do novo Arquivo: ");
 	scanf("%s", name_archive);
 	FILE *test = fopen(name_archive,"r+");
-	while(test != NULL){
+	
+	while(test != NULL)
+	{
 		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
 		printf(" Digite o nome do novo Arquivo: ");
 		scanf("%s", name_archive);
 		test = fopen(name_archive,"r+");
 	}
+
 
 	FILE *archive = fopen(name_archive,"w");
 
@@ -139,14 +158,17 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	fprintf(archive, "%d\n", cl);
 	fprintf(archive, "%d\n", lmt);
 
-	for(i = ln; i >0; i--)
-	{
-		for(j = cl; j > 0; j--)
+	if(ang == 3 )
+	{	
+		for(i = ln; i >0; i--)
 		{
-			fprintf(archive,"%d ", img[i][j].R);
-			fprintf(archive,"%d ", img[i][j].G);
-			fprintf(archive,"%d \n", img[i][j].B);
-		}
+			for(j = cl; j > 0; j--)
+			{
+				fprintf(archive,"%d ", img[i][j].R);
+				fprintf(archive,"%d ", img[i][j].G);
+				fprintf(archive,"%d \n", img[i][j].B);
+			}
+		}	
 	}
 
 	fclose(archive);
@@ -272,7 +294,6 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 2:
-		rot(img,*lmt,*cl,*ln);
 		break;
 
 		case 3:
@@ -282,6 +303,7 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 5:
+		rot(img,*lmt,*cl,*ln);
 		break;
 
 		case 6:
