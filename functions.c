@@ -112,8 +112,6 @@ void grey (pxl img[DIM][DIM], int cl, int ln)
 			printf("\n");*/
 		}
 	}
-
-
 }
 
 void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
@@ -153,13 +151,12 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 
 	FILE *archive = fopen(name_archive,"w");
 
-	fprintf(archive, "P3\n");
-	fprintf(archive, "%d ", ln);
-	fprintf(archive, "%d\n", cl);
-	fprintf(archive, "%d\n", lmt);
-
 	if(ang == 3 )
 	{	
+		fprintf(archive, "P3\n");
+		fprintf(archive, "%d ", ln);
+		fprintf(archive, "%d\n", cl);
+		fprintf(archive, "%d\n", lmt);
 		for(i = ln; i >0; i--)
 		{
 			for(j = cl; j > 0; j--)
@@ -170,6 +167,39 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 			}
 		}	
 	}
+	if(ang == 2 )
+	{	
+		fprintf(archive, "P3\n");
+		fprintf(archive, "%d ", cl);
+		fprintf(archive, "%d\n", ln);
+		fprintf(archive, "%d\n", lmt);
+		for(i = ln; i > 0; i--)
+		{
+			for(j = 0; j < cl; j++)
+			{
+				fprintf(archive,"%d ", img[j][i].R);
+				fprintf(archive,"%d ", img[j][i].G);
+				fprintf(archive,"%d \n", img[j][i].B);
+			}
+		}	
+	}
+	if(ang == 1)
+	{	
+		fprintf(archive, "P3\n");
+		fprintf(archive, "%d ", cl);
+		fprintf(archive, "%d\n", ln);
+		fprintf(archive, "%d\n", lmt);
+		for(i = 0; i < ln; i++)
+		{
+			for(j = cl; j > 0; j--)
+			{
+				fprintf(archive,"%d ", img[j][i].R);
+				fprintf(archive,"%d ", img[j][i].G);
+				fprintf(archive,"%d \n", img[j][i].B);
+			}
+		}	
+	}
+
 
 	fclose(archive);
 
@@ -177,7 +207,6 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	printf(" Arquivo salvo com sucesso!\n");
 	vsl(name_archive);
 }
-
 
 void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 {
@@ -214,6 +243,7 @@ void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 		}
 	}
 }
+
 void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 {
 	int i, j;
