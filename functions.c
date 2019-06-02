@@ -240,21 +240,19 @@ void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	cl *= 2;
 	ln *= 2;
 	for(i = 0; i < ln; i++)
-	{
-		for(j = 0; j < cl; j++)
+	{	
+		for(int k = 0; k<2; k++)
+		{
+		for(j = 0; j < cl/2; j++)
 		{	
+
 			fprintf(archive,"%d ", img[i][j].R);
-			fprintf(archive,"%d ", img[i][j].R);
-			fprintf(archive,"%d ", img[i][j].G);
 			fprintf(archive,"%d ", img[i][j].G);
 			fprintf(archive,"%d ", img[i][j].B);
-			fprintf(archive,"%d \n", img[i][j].B);
-			fprintf(archive,"%d ", img[i][j].R);
 			fprintf(archive,"%d ", img[i][j].R);
 			fprintf(archive,"%d ", img[i][j].G);
-			fprintf(archive,"%d ", img[i][j].G);
-			fprintf(archive,"%d ", img[i][j].B);
-			fprintf(archive,"%d \n", img[i][j].B);
+			fprintf(archive,"%d ", img[i][j].B);	
+		}
 		}
 	}
 	fclose(archive);
