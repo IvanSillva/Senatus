@@ -1,12 +1,11 @@
 #include "tela.h"
 #include "functions.h"
-#define MAX 600
 
 
 int main()
 {
 	
-	pxl img[MAX][MAX];
+	pxl img[DIM][DIM];
 	char cod[3];
 	int lmt;
 	int lrg, alt;

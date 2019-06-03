@@ -242,6 +242,7 @@ void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 			fprintf(archive,"%d \n", img[i][j].B);
 		}
 	}
+	vsl(name_archive);
 }
 
 void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
