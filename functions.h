@@ -17,3 +17,4 @@ void grey (pxl img[DIM][DIM], int cl, int ln);
 void save(pxl img[DIM][DIM], int lmt, int cl, int ln);
 void rot(pxl img[DIM][DIM], int lmt, int cl, int ln);
 void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln);
+void thr(pxl img[DIM][DIM], int cl, int ln);

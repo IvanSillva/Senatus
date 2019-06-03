@@ -44,7 +44,7 @@ int opc()
 }
 //Tela Inicial
 int tela_inicio()
-{	
+{
 	printf("\33[H\33[2J");
 	int op;
 	cbc();
@@ -70,7 +70,6 @@ int tela_inicio()
 		
 	}
 	return 0;
-	
 }
 
 void cmd()
@@ -84,7 +83,6 @@ void cmd()
 	printf(" 5 - 'rot'(Rotação da imagem, dado o ângulo)\n");
 	printf(" 6 - 'amp’(Ampliar a imagem, dado o zoom)\n");
 	printf(" 7 - ‘red’(Reduzir a imagem, dado o zoom)\n");
-
 }
 
 void vsl(char name_archive[500])

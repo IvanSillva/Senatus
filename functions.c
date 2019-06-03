@@ -110,6 +110,46 @@ void grey (pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
+void thr(pxl img[DIM][DIM], int cl, int ln)
+{
+	
+
+	int j, i, media =0, limit;
+
+	printf("\n Valor Limite: ");
+
+
+	scanf("%d", &limit);
+
+
+	for(i =0; i<ln; i++)
+	{
+		for(j =0; j<cl; j++)
+		{
+			
+			media = (img[i][j].R + img[i][j].G + img[i][j].B) / 3;
+
+
+			if(media > limit)
+			{
+				img[i][j].R = 255;
+				img[i][j].G = 255;
+				img[i][j].B = 255;
+
+			}
+			else
+			{
+				img[i][j].G = 0;
+				img[i][j].R = 0;
+				img[i][j].B = 0;
+
+
+			}
+		}
+
+	}
+}
+
 void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 {
 	int i, j;
@@ -182,6 +222,7 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 			}
 		}	
 	}
+
 	if(ang == 1)
 	{	
 		fprintf(archive, "P3\n");
@@ -255,7 +296,8 @@ void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	printf(" Digite o nome do novo Arquivo: ");
 	scanf("%s", name_archive);
 	FILE *test = fopen(name_archive,"r+");
-	while(test != NULL){
+	while(test != NULL)
+	{
 		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
 		printf(" Digite o nome do novo Arquivo: ");
 		scanf("%s", name_archive);
@@ -293,13 +335,6 @@ void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-
-
-
-
-
-
-
 void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 {
 	cmd();
@@ -323,6 +358,8 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 2:
+		thr(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
 		break;
 
 		case 3:
@@ -348,7 +385,4 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
     	printf ("Valor invalido!\n");
 
 	}
-
-
 }
-	
