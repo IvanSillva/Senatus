@@ -106,10 +106,6 @@ void grey (pxl img[DIM][DIM], int cl, int ln)
 
 			}
 
-			/*printf("%d\n", img[i][j].R);
-			printf("%d\n", img[i][j].G);
-			printf("%d\n", img[i][j].B);
-			printf("\n");*/
 		}
 	}
 }
@@ -154,9 +150,10 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	if(ang == 3 )
 	{	
 		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", ln);
-		fprintf(archive, "%d\n", cl);
+		fprintf(archive, "%d ", cl);
+		fprintf(archive, "%d\n", ln);
 		fprintf(archive, "%d\n", lmt);
+
 		for(i = ln; i >0; i--)
 		{
 			for(j = cl; j > 0; j--)
@@ -167,15 +164,17 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 			}
 		}	
 	}
+
 	if(ang == 2 )
 	{	
 		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", cl);
-		fprintf(archive, "%d\n", ln);
+		fprintf(archive, "%d ", ln);
+		fprintf(archive, "%d\n", cl);
 		fprintf(archive, "%d\n", lmt);
-		for(i = ln; i > 0; i--)
+
+		for(i = cl; i > 0; i--)
 		{
-			for(j = 0; j < cl; j++)
+			for(j = 0; j < ln; j++)
 			{
 				fprintf(archive,"%d ", img[j][i].R);
 				fprintf(archive,"%d ", img[j][i].G);
@@ -186,12 +185,13 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	if(ang == 1)
 	{	
 		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", cl);
-		fprintf(archive, "%d\n", ln);
+		fprintf(archive, "%d ", ln);
+		fprintf(archive, "%d\n", cl);
 		fprintf(archive, "%d\n", lmt);
-		for(i = 0; i < ln; i++)
+
+		for(i = 0; i < cl; i++)
 		{
-			for(j = cl; j > 0; j--)
+			for(j = ln; j > 0; j--)
 			{
 				fprintf(archive,"%d ", img[j][i].R);
 				fprintf(archive,"%d ", img[j][i].G);
