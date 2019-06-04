@@ -150,6 +150,46 @@ void thr(pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
+void ngtv(pxl img[DIM][DIM], int cl, int ln)
+{
+	
+
+	int j, i, media =0, limit;
+
+	printf("\n Valor Limite: ");
+
+
+	scanf("%d", &limit);
+
+
+	for(i =0; i<ln; i++)
+	{
+		for(j =0; j<cl; j++)
+		{
+			
+			media = (img[i][j].R + img[i][j].G + img[i][j].B) / 3;
+
+
+			if(media > limit)
+			{
+				img[i][j].R = 0;
+				img[i][j].G = 0;
+				img[i][j].B = 0;
+
+			}
+			else
+			{
+				img[i][j].G = 255;
+				img[i][j].R = 255;
+				img[i][j].B = 255;
+
+
+			}
+		}
+
+	}
+}
+
 void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 {
 	int i, j;
@@ -281,7 +321,9 @@ void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 			fprintf(archive,"%d ", img[i][j].R);
 			fprintf(archive,"%d ", img[i][j].G);
 			fprintf(archive,"%d \n", img[i][j].B);
+			
 		}
+		
 	}
 	vsl(name_archive);
 }
@@ -335,6 +377,75 @@ void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
+void blur(pxl img[DIM][DIM], int cl, int ln)
+{
+	int i, j, n;
+	printf(" Nível de Blurring: ");
+	scanf("%d", &n);
+for(int k = 0; k < n; k++)
+{
+	for(i = 1; i < ln-1; i++)
+	{
+		for(j = 1; j < cl-1; j++)
+		{
+			img[i][j].R = (img[i-1][j-1].R + img[i-1][j].R + img[i-1][j+1].R + 
+					       img[i][j-1].R + img[i][j].R + img[i][j+1].R +
+					       img[i+1][j-1].R + img[i+1][j].R + img[i+1][j+1].R)/9;
+
+			img[i][j].G = (img[i-1][j-1].G + img[i-1][j].G + img[i-1][j+1].G + 
+					       img[i][j-1].G + img[i][j].G + img[i][j+1].G +
+					       img[i+1][j-1].G + img[i+1][j].G + img[i+1][j+1].G)/9;
+
+			img[i][j].B = (img[i-1][j-1].B + img[i-1][j].B + img[i-1][j+1].B + 
+					       img[i][j-1].B + img[i][j].B + img[i][j+1].B +
+					       img[i+1][j-1].B + img[i+1][j].B + img[i+1][j+1].B)/9;
+			}
+		}
+	}
+}
+
+void sharp(pxl img[DIM][DIM], int cl, int ln)
+{
+	int i, j, n;
+	printf(" Nível de Sharpening: ");
+	scanf("%d", &n);
+
+for(int k = 0; k < n; k++)
+{
+	for(i = 1; i < ln-1; i++)
+	{
+		for(j = 1; j < cl-1; j++)
+		{
+			img[i][j].R =  5*img[i][j].R - img[i-1][j].R - img[i][j-1].R - img[i][j+1].R - 
+					       img[i+1][j].R;
+			if(img[i][j].R < 0){
+				img[i][j].R = 0;
+			}else if(img[i][j].R > 255){
+				img[i][j].R = 255;
+			}
+
+			img[i][j].G =  5*img[i][j].G -img[i-1][j].G - img[i][j-1].G - img[i][j+1].G - 
+					       img[i+1][j].G;
+			if(img[i][j].G < 0){
+				img[i][j].G = 0;
+			}else if(img[i][j].G > 255){
+				img[i][j].G = 255;
+			}
+
+
+			img[i][j].B =  5*img[i][j].B -img[i-1][j].B - img[i][j-1].B - img[i][j+1].B - 
+					       img[i+1][j].B;
+			if(img[i][j].B < 0){
+				img[i][j].B = 0;
+			}else if(img[i][j].B > 255){
+				img[i][j].B = 255;
+			}
+
+			}
+		}
+	}
+}
+
 void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 {
 	cmd();
@@ -343,7 +454,7 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	printf("\n");
 	printf(" Informe o comando: ");
 	scanf("%d", &acao);
-	while(acao<1 || acao>7){
+	while(acao<1 || acao>8){
 		printf(" Informe o comando: ");
 		scanf("%d", &acao);
 	}
@@ -363,9 +474,13 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		break;
 
 		case 3:
+		blur(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
 		break;
 
 		case 4:
+		sharp(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
 		break;
 
 		case 5:
@@ -378,6 +493,11 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 
 		case 7:
 		rdz(img,*lmt,*cl,*ln);
+		break;
+
+		case 8:
+		ngtv(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
 		break;
 
 

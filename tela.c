@@ -83,10 +83,12 @@ void cmd()
 	printf(" 5 - 'rot'(Rotação da imagem, dado o ângulo)\n");
 	printf(" 6 - 'amp’(Ampliar a imagem, dado o zoom)\n");
 	printf(" 7 - ‘red’(Reduzir a imagem, dado o zoom)\n");
+	printf(" 8 - ‘neg’(Negativo da imagem)\n");
 }
 
 void vsl(char name_archive[500])
 {
+	sleep(2);
 	char comando[500];
 	strcpy(comando, "eog ");
 	strcat(comando, name_archive);

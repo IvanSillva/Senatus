@@ -18,3 +18,6 @@ void save(pxl img[DIM][DIM], int lmt, int cl, int ln);
 void rot(pxl img[DIM][DIM], int lmt, int cl, int ln);
 void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln);
 void thr(pxl img[DIM][DIM], int cl, int ln);
+void blur(pxl img[DIM][DIM], int cl, int ln);
+void sharp(pxl img[DIM][DIM], int cl, int ln);
+void ngtv(pxl img[DIM][DIM], int cl, int ln);
