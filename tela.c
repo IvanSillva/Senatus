@@ -88,9 +88,10 @@ void cmd()
 
 void vsl(char name_archive[500])
 {
-	sleep(2);
-	char comando[500];
-	strcpy(comando, "eog ");
-	strcat(comando, name_archive);
-	system(comando);
-}
+	
+		char comando[500];
+		strcpy(comando, "eog ");
+		strcat(comando, name_archive);
+		system(comando);
+
+}	

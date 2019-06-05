@@ -325,6 +325,8 @@ void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 		}
 		
 	}
+
+	fclose(archive);
 	vsl(name_archive);
 }
 
@@ -382,8 +384,8 @@ void blur(pxl img[DIM][DIM], int cl, int ln)
 	int i, j, n;
 	printf(" Nível de Blurring: ");
 	scanf("%d", &n);
-for(int k = 0; k < n; k++)
-{
+ for(int k = 0; k < n; k++)
+ {
 	for(i = 1; i < ln-1; i++)
 	{
 		for(j = 1; j < cl-1; j++)
@@ -407,15 +409,16 @@ for(int k = 0; k < n; k++)
 void sharp(pxl img[DIM][DIM], int cl, int ln)
 {
 	int i, j, n;
+
 	printf(" Nível de Sharpening: ");
 	scanf("%d", &n);
 
-for(int k = 0; k < n; k++)
-{
-	for(i = 1; i < ln-1; i++)
-	{
-		for(j = 1; j < cl-1; j++)
+ 	for(int k = 0; k < n; k++)
+ 	{
+		for(i = 1; i < ln-1; i++)
 		{
+			for(j = 1; j < cl-1; j++)
+			{
 			img[i][j].R =  5*img[i][j].R - img[i-1][j].R - img[i][j-1].R - img[i][j+1].R - 
 					       img[i+1][j].R;
 			if(img[i][j].R < 0){
