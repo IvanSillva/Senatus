@@ -408,45 +408,58 @@ void blur(pxl img[DIM][DIM], int cl, int ln)
 
 void sharp(pxl img[DIM][DIM], int cl, int ln)
 {
-	int i, j, n;
+	int i, j;
 
-	printf(" Nível de Sharpening: ");
-	scanf("%d", &n);
+	//printf(" Nível de Sharpening: ");
+	//scanf("%d", &n);
 
- 	for(int k = 0; k < n; k++)
- 	{
-		for(i = 1; i < ln-1; i++)
+ 	//for(int k = 0; k < n; k++)
+ 	//{
+
+	pxl imgb[ln][cl];
+
+	for(i =0; i<ln;i++)
+	{
+		for(j =0; j<cl; j++)
 		{
-			for(j = 1; j < cl-1; j++)
+			imgb[i][j] = img[i][j];
+		}
+	}
+
+
+	for(i = 1; i < ln - 1; i++)
+	{
+			for(j = 1; j < cl - 1; j++)
 			{
-			img[i][j].R =  5*img[i][j].R - img[i-1][j].R - img[i][j-1].R - img[i][j+1].R - 
-					       img[i+1][j].R;
-			if(img[i][j].R < 0){
-				img[i][j].R = 0;
-			}else if(img[i][j].R > 255){
-				img[i][j].R = 255;
-			}
+				
+				img[i][j].R =  5*imgb[i][j].R - imgb[i-1][j].R - imgb[i][j-1].R - imgb[i][j+1].R - imgb[i+1][j].R;
 
-			img[i][j].G =  5*img[i][j].G -img[i-1][j].G - img[i][j-1].G - img[i][j+1].G - 
-					       img[i+1][j].G;
-			if(img[i][j].G < 0){
-				img[i][j].G = 0;
-			}else if(img[i][j].G > 255){
-				img[i][j].G = 255;
-			}
+				if(img[i][j].R < 0){
+					img[i][j].R = 0;
+				}else if(img[i][j].R > 255){
+					img[i][j].R = 255;
+				}
+
+				img[i][j].G =  5*imgb[i][j].G -imgb[i-1][j].G - imgb[i][j-1].G - imgb[i][j+1].G - imgb[i+1][j].G;
+
+				if(img[i][j].G < 0){
+					img[i][j].G = 0;
+				}else if(img[i][j].G > 255){
+					img[i][j].G = 255;
+				}
 
 
-			img[i][j].B =  5*img[i][j].B -img[i-1][j].B - img[i][j-1].B - img[i][j+1].B - 
-					       img[i+1][j].B;
-			if(img[i][j].B < 0){
-				img[i][j].B = 0;
-			}else if(img[i][j].B > 255){
-				img[i][j].B = 255;
-			}
+				img[i][j].B =  5*imgb[i][j].B -imgb[i-1][j].B - imgb[i][j-1].B - imgb[i][j+1].B - imgb[i+1][j].B;
+
+				if(img[i][j].B < 0){
+					img[i][j].B = 0;
+				}else if(img[i][j].B > 255){
+					img[i][j].B = 255;
+				}
 
 			}
 		}
-	}
+	//}
 }
 
 void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
