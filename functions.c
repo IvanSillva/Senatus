@@ -1,9 +1,22 @@
 #include "functions.h"
-
-void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
+void freememory(pxl **img, int cl, int ln)
 {
-	cbc();
 	int i, j;
+    for(i=0; i<ln; i++)
+    {
+      free(img[i]);
+  	}
+  	free(img);
+		
+}
+void read()
+{
+	char cod[3];
+	int lmt;
+	int ln, cl;
+	int i, j;
+	cbc();
+	
 
 	char name_archive[60];
 
@@ -24,13 +37,21 @@ void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	printf("Arquivo '%s' aberto com sucesso! \n", name_archive);
 
 	fscanf(archive, "%s", cod);
-	fscanf(archive, "%d", cl);
-	fscanf(archive, "%d", ln);
-	fscanf(archive, "%d", lmt);
+	fscanf(archive, "%d", &cl);
+	fscanf(archive, "%d", &ln);
+	fscanf(archive, "%d", &lmt);
 
-	for(i = 0; i < *ln; i++)
+	pxl **img;
+	img = (pxl**)calloc(ln,sizeof(pxl*));
+
+	for(i=0;i<ln;i++)
+	{ 
+   	 img[i] = (pxl*)calloc(cl,sizeof(pxl));
+	}
+
+	for(i = 0; i < ln; i++)
 	{
-		for(j = 0; j < *cl; j++)
+		for(j = 0; j < cl; j++)
 		{
 			fscanf(archive,"%d", &img[i][j].R);
 			fscanf(archive,"%d", &img[i][j].G);
@@ -39,10 +60,10 @@ void read(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 	}
 	fclose(archive);
 	cmd();
-	options(img, cod, lmt, cl, ln);
+	options(img, cod, &lmt, &cl, &ln);
 }
 
-void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
+void save(pxl **img, int lmt, int cl, int ln)
 {
 	int i, j;
 
@@ -82,7 +103,7 @@ void save(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-void grey (pxl img[DIM][DIM], int cl, int ln)
+void grey (pxl **img, int cl, int ln)
 {
 	
 
@@ -110,7 +131,7 @@ void grey (pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
-void thr(pxl img[DIM][DIM], int cl, int ln)
+void thr(pxl **img, int cl, int ln)
 {
 	
 
@@ -150,7 +171,7 @@ void thr(pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
-void ngtv(pxl img[DIM][DIM], int cl, int ln)
+void ngtv(pxl **img, int cl, int ln)
 {
 	
 
@@ -190,7 +211,7 @@ void ngtv(pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
-void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
+void rot(pxl **img, int lmt, int cl, int ln)
 {
 	int i, j;
 
@@ -289,7 +310,7 @@ void rot(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
+void rdz(pxl **img, int lmt, int cl, int ln)
 {
 	int i, j;
 
@@ -330,7 +351,7 @@ void rdz(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
+void amp(pxl **img, int lmt, int cl, int ln)
 {
 	int i, j;
 	int a = 0, b = 0;
@@ -379,7 +400,7 @@ void amp(pxl img[DIM][DIM], int lmt, int cl, int ln)
 	vsl(name_archive);
 }
 
-void blur(pxl img[DIM][DIM], int cl, int ln)
+void blur(pxl **img, int cl, int ln)
 {
 	int i, j, n;
 	printf(" Nível de Blurring: ");
@@ -406,7 +427,7 @@ void blur(pxl img[DIM][DIM], int cl, int ln)
 	}
 }
 
-void sharp(pxl img[DIM][DIM], int cl, int ln)
+void sharp(pxl **img, int cl, int ln)
 {
 	int i, j;
 
@@ -416,7 +437,14 @@ void sharp(pxl img[DIM][DIM], int cl, int ln)
  	//for(int k = 0; k < n; k++)
  	//{
 
-	pxl imgb[ln][cl];
+	pxl **imgb;
+	imgb = (pxl**)calloc(ln,sizeof(pxl*));
+
+	for(i=0;i<ln;i++)
+	{ 
+   	 imgb[i] = (pxl*)calloc(cl,sizeof(pxl));
+	}
+
 
 	for(i =0; i<ln;i++)
 	{
@@ -459,13 +487,14 @@ void sharp(pxl img[DIM][DIM], int cl, int ln)
 
 			}
 		}
+		freememory(imgb,cl,ln);
 	//}
 }
 
-void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
+void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 {
 	cmd();
-
+	int i, j;
 	int acao;
 	printf("\n");
 	printf(" Informe o comando: ");
@@ -474,46 +503,53 @@ void options(pxl img[DIM][DIM], char *cod, int *lmt, int *cl, int*ln)
 		printf(" Informe o comando: ");
 		scanf("%d", &acao);
 	}
-	//grey(img,*cl,*ln);
-	//save(img,*lmt,*cl,*ln);
+
 	switch(acao)
 	{
 
 		case 1:
 		grey(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 2:
 		thr(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 3:
 		blur(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 4:
 		sharp(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 5:
 		rot(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 6:
 		amp(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 7:
 		rdz(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 		case 8:
 		ngtv(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln);
 		break;
 
 

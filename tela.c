@@ -2,7 +2,7 @@
 //Cabeçalho
 void cbc()
 {
-	printf("\33[H\33[2J");
+	system("clear");
 	printf("======================================= \n");
 	printf("\t\tSENATUS\n");
 	printf("\t     (Image Editor)\n");
@@ -26,7 +26,7 @@ int opc()
 	}
 	if(user == 0)
 	{
-		printf("\33[H\33[2J");
+		system("clear");
 		cbc();
 		printf("Programa Encerrado!\n");
 		exit(0);
@@ -34,7 +34,7 @@ int opc()
 	
 	if(user == 1)
 	{
-		printf("\33[H\33[2J");
+		system("clear");
 		return 1;
 		
 	}
@@ -43,9 +43,9 @@ int opc()
 	printf("\n");
 }
 //Tela Inicial
-int tela_inicio()
+void tela_inicio()
 {
-	printf("\33[H\33[2J");
+	system("clear");
 	int op;
 	cbc();
 	printf("\t 1 - Iniciar\n");
@@ -60,16 +60,16 @@ int tela_inicio()
 	}
 	if(op == 0)
 	{
-		return 0;
+			system("clear");
+			cbc();
+			printf("Programa Encerrado!\n");
+			exit(0);
 	}
 	
 	if(op == 1)
-	{
-		printf("\33[H\33[2J");
-		return opc();
-		
+	{	
+		read();
 	}
-	return 0;
 }
 
 void cmd()
