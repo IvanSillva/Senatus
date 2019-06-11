@@ -14,14 +14,14 @@ int opc()
 {
 	cbc();
 	int user;
-	printf("\t 1 - Abrir imagem PPM\n");
-	printf("\t 0 - Encerrar Programa\n");
+	printf(" 1 - Abrir imagem PPM\n");
+	printf(" 0 - Encerrar Programa\n");
 	printf("Opção: ");
 	scanf("%d", &user);
 	while(user!=1 && user!=0)
 	{
-		printf("Opção Invalida. Digite novamente \n");
-		printf("Opção: ");
+		printf("\n !Opção Invalida. Digite novamente! \n");
+		printf("\n Opção: ");
 		scanf("%d", &user);
 	}
 	if(user == 0)
@@ -48,21 +48,21 @@ void tela_inicio()
 	system("clear");
 	int op;
 	cbc();
-	printf("\t 1 - Iniciar\n");
-	printf("\t 0 - Sair\n");
-	printf("Opção: ");
+	printf(" 1 - Iniciar\n");
+	printf(" 0 - Sair\n");
+	printf("\n Opção: ");
 	scanf("%d", &op);
 	while(op!=1 && op!=0)
 	{
-		printf("Opção Invalida. Digite novamente \n");
-		printf("Opção: ");
+		printf("\n !Opção Invalida. Digite novamente! \n");
+		printf("\n Opção: ");
 		scanf("%d", &op);
 	}
 	if(op == 0)
 	{
 			system("clear");
 			cbc();
-			printf("Programa Encerrado!\n");
+			printf(" Programa Encerrado!\n");
 			exit(0);
 	}
 	

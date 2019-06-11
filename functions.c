@@ -11,6 +11,7 @@ void freememory(pxl **img, int cl, int ln)
 }
 void read()
 {
+
 	char cod[3];
 	int lmt;
 	int ln, cl;
@@ -20,7 +21,7 @@ void read()
 
 	char name_archive[60];
 
-	printf("Digite o nome do Arquivo:\n");
+	printf(" Digite o nome do Arquivo: ");
 
 	scanf("%s", name_archive);
 
@@ -28,13 +29,13 @@ void read()
 
 	while( archive == NULL ) 
 	{
-		printf("Arquivo não existente, tente novamente!\n" );
-		printf("Digite o nome do Arquivo:\n");
+		printf("\n !Arquivo não existente, tente novamente!\n" );
+		printf("\n Digite o nome do Arquivo: ");
 		scanf(" %s", name_archive);
 		archive = fopen(name_archive,"r");
 	}
 
-	printf("Arquivo '%s' aberto com sucesso! \n", name_archive);
+	printf(" Arquivo '%s' aberto com sucesso! \n", name_archive);
 
 	fscanf(archive, "%s", cod);
 	fscanf(archive, "%d", &cl);
