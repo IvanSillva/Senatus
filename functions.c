@@ -7,6 +7,7 @@ void freememory(pxl **img, int cl, int ln)
       free(img[i]);
   	}
   	free(img);
+
 		
 }
 void read()
@@ -47,7 +48,7 @@ void read()
 
 	for(i=0;i<ln;i++)
 	{ 
-   	 img[i] = (pxl*)calloc(cl,sizeof(pxl));
+   	 	img[i] = (pxl*)calloc(cl,sizeof(pxl));
 	}
 
 	for(i = 0; i < ln; i++)
@@ -214,7 +215,9 @@ void ngtv(pxl **img, int cl, int ln)
 
 void rot(pxl **img, int lmt, int cl, int ln)
 {
-	int i, j;
+	int i, j, a,b;
+
+	pxl **imgrot;
 
 	int ang;
 	printf("\n");
@@ -231,84 +234,79 @@ void rot(pxl **img, int lmt, int cl, int ln)
 		scanf("%d", &ang);
 	}
 
-	char name_archive[60];
-
-	printf("\n");
-	printf(" Digite o nome do novo Arquivo: ");
-	scanf("%s", name_archive);
-	FILE *test = fopen(name_archive,"r+");
-	
-	while(test != NULL)
-	{
-		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
-		printf(" Digite o nome do novo Arquivo: ");
-		scanf("%s", name_archive);
-		test = fopen(name_archive,"r+");
-	}
-
-
-	FILE *archive = fopen(name_archive,"w");
-
 	if(ang == 3 )
 	{	
-		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", cl);
-		fprintf(archive, "%d\n", ln);
-		fprintf(archive, "%d\n", lmt);
+		imgrot = (pxl**)calloc(ln,sizeof(pxl*));
 
-		for(i = ln; i >0; i--)
+		for(i=0;i<ln;i++)
+		{ 
+   	 		imgrot[i] = (pxl*)calloc(cl,sizeof(pxl));
+		}
+
+
+		for(i = ln-1, a =0; i >=0; i--)
 		{
-			for(j = cl; j > 0; j--)
+			for(j = cl-1, b=0; j >= 0; j--)
 			{
-				fprintf(archive,"%d ", img[i][j].R);
-				fprintf(archive,"%d ", img[i][j].G);
-				fprintf(archive,"%d \n", img[i][j].B);
+				imgrot[a][b].R = img[i][j].R;
+				imgrot[a][b].G	= img[i][j].G;
+				imgrot[a][b].B	= img[i][j].B;
+				b++;
 			}
+			a++;
 		}	
+		save(imgrot,lmt,cl,ln);
 	}
 
 	if(ang == 2 )
 	{	
-		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", ln);
-		fprintf(archive, "%d\n", cl);
-		fprintf(archive, "%d\n", lmt);
+		imgrot = (pxl**)calloc(cl,sizeof(pxl*));
 
-		for(i = cl; i > 0; i--)
+		for(i=0;i<cl;i++)
+		{ 
+   	 		imgrot[i] = (pxl*)calloc(ln,sizeof(pxl));
+		}
+
+
+		
+
+		for(i = cl-1, a=0; i >= 0; i--)
 		{
-			for(j = 0; j < ln; j++)
+			for(j = 0, b=0; j <= ln-1; j++)
 			{
-				fprintf(archive,"%d ", img[j][i].R);
-				fprintf(archive,"%d ", img[j][i].G);
-				fprintf(archive,"%d \n", img[j][i].B);
+				imgrot[a][b].R = img[j][i].R;
+				imgrot[a][b].G = img[j][i].G;
+				imgrot[a][b].B = img[j][i].B;
+				b++;
 			}
+			a++;
 		}	
+
+		save(imgrot,lmt,ln,cl);	
 	}
 
-	if(ang == 1)
+	if(ang == 1 )
 	{	
-		fprintf(archive, "P3\n");
-		fprintf(archive, "%d ", ln);
-		fprintf(archive, "%d\n", cl);
-		fprintf(archive, "%d\n", lmt);
+		imgrot = (pxl**)calloc(cl,sizeof(pxl*));
 
-		for(i = 0; i < cl; i++)
+		for(i=0;i<cl;i++)
+		{ 
+   	 		imgrot[i] = (pxl*)calloc(ln,sizeof(pxl));
+		}
+		
+		for(i = 0, a=0; i <= cl - 1; i++)
 		{
-			for(j = ln; j > 0; j--)
+			for(j = ln - 1, b=0; j >= 0; j--)
 			{
-				fprintf(archive,"%d ", img[j][i].R);
-				fprintf(archive,"%d ", img[j][i].G);
-				fprintf(archive,"%d \n", img[j][i].B);
+				imgrot[a][b].R = img[j][i].R;
+				imgrot[a][b].G = img[j][i].G;
+				imgrot[a][b].B = img[j][i].B;
+				b++;
 			}
+			a++;
 		}	
-	}
-
-
-	fclose(archive);
-
-	printf("\n");
-	printf(" Arquivo salvo com sucesso!\n");
-	vsl(name_archive);
+		save(imgrot,lmt,ln,cl);
+	}	
 }
 
 void rdz(pxl **img, int lmt, int cl, int ln)
@@ -376,13 +374,12 @@ void amp(pxl **img, int lmt, int cl, int ln)
 	fprintf(archive, "%d ", cl*2);
 	fprintf(archive, "%d\n", ln*2);
 	fprintf(archive, "%d\n", lmt);
-	cl *= 2;
 	ln *= 2;
-	for(i = 0; i < ln; i++)
+	for(i = 0; i <= ln-1; i++)
 	{	
 		for(int k = 0; k<2; k++)
 		{
-		for(j = 0; j < cl/2; j++)
+		for(j = 0; j < cl-1; j++)
 		{	
 
 			fprintf(archive,"%d ", img[i][j].R);
@@ -431,12 +428,6 @@ void blur(pxl **img, int cl, int ln)
 void sharp(pxl **img, int cl, int ln)
 {
 	int i, j;
-
-	//printf(" Nível de Sharpening: ");
-	//scanf("%d", &n);
-
- 	//for(int k = 0; k < n; k++)
- 	//{
 
 	pxl **imgb;
 	imgb = (pxl**)calloc(ln,sizeof(pxl*));
@@ -528,12 +519,11 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 
 		case 4:
 		sharp(img,*cl,*ln);
-		save(img,*lmt,*cl,*ln);
 		freememory(img,*cl,*ln);
 		break;
 
 		case 5:
-		rot(img,*lmt,*cl,*ln);
+		rot(img,*lmt,*cl,*ln);	
 		freememory(img,*cl,*ln);
 		break;
 
