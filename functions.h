@@ -3,7 +3,7 @@
 #include <string.h>
 #include "tela.h"
 
-
+char direct[100] = "/images/main_images/";
 //Structs para os pixels
 typedef struct 
 {
