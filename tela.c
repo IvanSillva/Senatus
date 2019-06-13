@@ -1,4 +1,5 @@
 #include "tela.h"
+#include "functions.h"
 //Cabeçalho
 void cbc()
 {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tela.h"
-#define DIM 1200
+
 
 //Structs para os pixels
 typedef struct 

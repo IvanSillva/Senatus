@@ -1,4 +1,5 @@
 #include "functions.h"
+
 void freememory(pxl **img, int cl, int ln)
 {
 	int i, j;
@@ -36,7 +37,9 @@ void read()
 		archive = fopen(name_archive,"r");
 	}
 
-	printf(" Arquivo '%s' aberto com sucesso! \n", name_archive);
+	printf("\n Arquivo '%s' aberto com sucesso! \n", name_archive);
+
+	sleep(1);
 
 	fscanf(archive, "%s", cod);
 	fscanf(archive, "%d", &cl);
@@ -353,55 +356,51 @@ void rdz(pxl **img, int lmt, int cl, int ln)
 void amp(pxl **img, int lmt, int cl, int ln)
 {
 	int i, j;
+
 	int a = 0, b = 0;
 
-	char name_archive[60];
-	printf("\n");
-	printf(" Digite o nome do novo Arquivo: ");
-	scanf("%s", name_archive);
-	FILE *test = fopen(name_archive,"r+");
-	while(test != NULL)
-	{
-		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
-		printf(" Digite o nome do novo Arquivo: ");
-		scanf("%s", name_archive);
-		test = fopen(name_archive,"r+");
+	pxl **imgamp;
+
+	imgamp = (pxl**)calloc(ln*2,sizeof(pxl*));
+
+	for(i=0;i<ln*2;i++)
+	{ 
+   			imgamp[i] = (pxl*)calloc(cl*2,sizeof(pxl));
 	}
-
-	FILE *archive = fopen(name_archive,"w");
-
-	fprintf(archive, "P3\n");
-	fprintf(archive, "%d ", cl*2);
-	fprintf(archive, "%d\n", ln*2);
-	fprintf(archive, "%d\n", lmt);
-	ln *= 2;
+	
 	for(i = 0; i <= ln-1; i++)
 	{	
 		for(int k = 0; k<2; k++)
 		{
-		for(j = 0; j < cl-1; j++)
-		{	
 
-			fprintf(archive,"%d ", img[i][j].R);
-			fprintf(archive,"%d ", img[i][j].G);
-			fprintf(archive,"%d ", img[i][j].B);
-			fprintf(archive,"%d ", img[i][j].R);
-			fprintf(archive,"%d ", img[i][j].G);
-			fprintf(archive,"%d ", img[i][j].B);	
+			for(j = 0; j <= cl-1; j++)
+			{	
+				
+				imgamp[a][b].R =	img[i][j].R;
+				imgamp[a][b].G =	img[i][j].G;
+				imgamp[a][b].B =	img[i][j].B;
+				b++;
+				imgamp[a][b].R =	img[i][j].R;
+				imgamp[a][b].G =	img[i][j].G;
+				imgamp[a][b].B =	img[i][j].B;	
+				b++;
+			}
+			b=0;
+			a++;
 		}
-		}
+		
 	}
-	fclose(archive);
 
-	printf("\n");
-	printf(" Arquivo salvo com sucesso!\n");
-	vsl(name_archive);
+	cl*=2;
+	ln*=2;
+
+	save(imgamp,lmt,cl,ln);
 }
 
 void blur(pxl **img, int cl, int ln)
 {
 	int i, j, n;
-	printf(" Nível de Blurring: ");
+	printf("\n Nível de Blurring: ");
 	scanf("%d", &n);
  for(int k = 0; k < n; k++)
  {
@@ -489,10 +488,10 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 	int i, j;
 	int acao;
 	printf("\n");
-	printf(" Informe o comando: ");
+	printf(" Informe o número do comando: ");
 	scanf("%d", &acao);
 	while(acao<1 || acao>8){
-		printf(" Informe o comando: ");
+		printf(" Informe o número do comando: ");
 		scanf("%d", &acao);
 	}
 
@@ -519,6 +518,7 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 
 		case 4:
 		sharp(img,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
 		freememory(img,*cl,*ln);
 		break;
 
