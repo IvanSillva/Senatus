@@ -10,39 +10,7 @@ void cbc()
 	printf("======================================= \n");
 	printf("\n");
 }
-//Opções
-int opc()
-{
-	cbc();
-	int user;
-	printf(" 1 - Abrir imagem PPM\n");
-	printf(" 0 - Encerrar Programa\n");
-	printf("Opção: ");
-	scanf("%d", &user);
-	while(user!=1 && user!=0)
-	{
-		printf("\n !Opção Invalida. Digite novamente! \n");
-		printf("\n Opção: ");
-		scanf("%d", &user);
-	}
-	if(user == 0)
-	{
-		system("clear");
-		cbc();
-		printf("Programa Encerrado!\n");
-		exit(0);
-	}
-	
-	if(user == 1)
-	{
-		system("clear");
-		return 1;
-		
-	}
-	return 0;
 
-	printf("\n");
-}
 //Tela Inicial
 void tela_inicio()
 {
@@ -85,6 +53,8 @@ void cmd()
 	printf(" 6 - 'amp’(Ampliar a imagem, dado o zoom)\n");
 	printf(" 7 - ‘red’(Reduzir a imagem, dado o zoom)\n");
 	printf(" 8 - ‘neg’(Negativo da imagem)\n");
+	printf(" 9 - ‘dtc’(Detecção de borda)\n");
+	printf(" 0 - ‘end’(Encerrar programa)\n");
 }
 
 void vsl(char name_archive[500])

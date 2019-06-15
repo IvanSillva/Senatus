@@ -3,7 +3,7 @@
 #include <string.h>
 #include "tela.h"
 
-char direct[100] = "/images/main_images/";
+
 //Structs para os pixels
 typedef struct 
 {
@@ -21,4 +21,5 @@ void thr(pxl **img, int cl, int ln);
 void blur(pxl **img, int cl, int ln);
 void sharp(pxl **img, int cl, int ln);
 void ngtv(pxl **img, int cl, int ln);
-void freememory(pxl **img, int cl, int ln);
+void freememory(pxl **img, int cl, int ln, int i);
+void dtcb(pxl **img,int lmt, int cl, int ln);

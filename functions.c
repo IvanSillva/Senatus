@@ -1,14 +1,4 @@
 #include "functions.h"
-
-void freememory(pxl **img, int cl, int ln)
-{
-	int i, j;
-    for(i=0; i<ln; i++)
-    {
-      free(img[i]);
-  	}
-  	free(img);		
-}
 void read()
 {
 
@@ -64,6 +54,20 @@ void read()
 	fclose(archive);
 	cmd();
 	options(img, cod, &lmt, &cl, &ln);
+}
+
+void freememory(pxl **img, int cl, int ln, int i)
+{
+	
+    if(i<ln)
+    {
+      free(img[i]);
+      return freememory(img, cl, ln, i+1);
+    }
+    else
+    {
+  		return free(img);		
+    }	
 }
 
 void save(pxl **img, int lmt, int cl, int ln)
@@ -344,7 +348,7 @@ void rdz(pxl **img, int lmt, int cl, int ln)
 	cl/=n;
 	ln/=n;
 	save(imgred,lmt,cl,ln);
-	freememory(imgred,cl,ln);
+	freememory(imgred,cl,ln,0);
 }
 
 void amp(pxl **img, int lmt, int cl, int ln)
@@ -389,7 +393,7 @@ void amp(pxl **img, int lmt, int cl, int ln)
 	ln*=n;
 
 	save(imgamp,lmt,cl,ln);
-	freememory(imgamp,cl,ln);
+	freememory(imgamp,cl,ln,0);
 }
 
 void blur(pxl **img, int cl, int ln)
@@ -397,23 +401,23 @@ void blur(pxl **img, int cl, int ln)
 	int i, j, n;
 	printf("\n Nível de Blurring: ");
 	scanf("%d", &n);
- for(int k = 0; k < n; k++)
- {
-	for(i = 1; i < ln-1; i++)
-	{
-		for(j = 1; j < cl-1; j++)
+ 	for(int k = 0; k < n; k++)
+ 	{
+		for(i = 1; i < ln-1; i++)
 		{
-			img[i][j].R = (img[i-1][j-1].R + img[i-1][j].R + img[i-1][j+1].R + 
-					       img[i][j-1].R + img[i][j].R + img[i][j+1].R +
-					       img[i+1][j-1].R + img[i+1][j].R + img[i+1][j+1].R)/9;
+			for(j = 1; j < cl-1; j++)
+			{
+				img[i][j].R = (img[i-1][j-1].R + img[i-1][j].R + img[i-1][j+1].R + 
+						       img[i][j-1].R + img[i][j].R + img[i][j+1].R +
+						       img[i+1][j-1].R + img[i+1][j].R + img[i+1][j+1].R)/9;
 
-			img[i][j].G = (img[i-1][j-1].G + img[i-1][j].G + img[i-1][j+1].G + 
-					       img[i][j-1].G + img[i][j].G + img[i][j+1].G +
-					       img[i+1][j-1].G + img[i+1][j].G + img[i+1][j+1].G)/9;
+				img[i][j].G = (img[i-1][j-1].G + img[i-1][j].G + img[i-1][j+1].G + 
+						       img[i][j-1].G + img[i][j].G + img[i][j+1].G +
+						       img[i+1][j-1].G + img[i+1][j].G + img[i+1][j+1].G)/9;
 
-			img[i][j].B = (img[i-1][j-1].B + img[i-1][j].B + img[i-1][j+1].B + 
-					       img[i][j-1].B + img[i][j].B + img[i][j+1].B +
-					       img[i+1][j-1].B + img[i+1][j].B + img[i+1][j+1].B)/9;
+				img[i][j].B = (img[i-1][j-1].B + img[i-1][j].B + img[i-1][j+1].B + 
+						       img[i][j-1].B + img[i][j].B + img[i][j+1].B +
+						       img[i+1][j-1].B + img[i+1][j].B + img[i+1][j+1].B)/9;
 			}
 		}
 	}
@@ -473,8 +477,68 @@ void sharp(pxl **img, int cl, int ln)
 
 			}
 		}
-		freememory(imgb,cl,ln);
+		freememory(imgb,cl,ln, 0);
 	//}
+}
+
+void dtcb(pxl **img,int lmt, int cl, int ln)
+{
+	int i, j;
+
+	pxl **imgb;
+	imgb = (pxl**)calloc(ln,sizeof(pxl*));
+
+	for(i=0;i<ln;i++)
+	{ 
+   	 imgb[i] = (pxl*)calloc(cl,sizeof(pxl));
+	}
+
+
+	for(i =0; i<ln;i++)
+	{
+		for(j =0; j<cl; j++)
+		{
+			imgb[i][j] = img[i][j];
+		}
+	}
+
+
+	for(i = 1; i < ln - 1; i++)
+	{
+			for(j = 1; j < cl - 1; j++)
+			{
+				
+				img[i][j].R =  8*imgb[i][j].R - imgb[i-1][j-1].R - imgb[i-1][j].R - imgb[i-1][j+1].R - 
+						   	   imgb[i][j-1].R - imgb[i][j+1].R - imgb[i+1][j-1].R - imgb[i+1][j].R - imgb[i+1][j+1].R;
+
+				if(img[i][j].R < 0){
+					img[i][j].R = 0;
+				}else if(img[i][j].R > 255){
+					img[i][j].R = 255;
+				}
+
+				img[i][j].G =  8*imgb[i][j].G - imgb[i-1][j-1].G - imgb[i-1][j].G - imgb[i-1][j+1].G - 
+						   	     imgb[i][j-1].G - imgb[i][j+1].G - imgb[i+1][j-1].G - imgb[i+1][j].G - imgb[i+1][j+1].G;
+
+				if(img[i][j].G < 0){
+					img[i][j].G = 0;
+				}else if(img[i][j].G > 255){
+					img[i][j].G = 255;
+				}
+
+
+				img[i][j].B =  8*imgb[i][j].B - imgb[i-1][j-1].B - imgb[i-1][j].B - imgb[i-1][j+1].B - 
+						   	   imgb[i][j-1].B - imgb[i][j+1].B - imgb[i+1][j-1].B - imgb[i+1][j].B - imgb[i+1][j+1].B;
+
+				if(img[i][j].B < 0){
+					img[i][j].B = 0;
+				}else if(img[i][j].B > 255){
+					img[i][j].B = 255;
+				}
+
+			}
+		}
+		freememory(imgb,cl,ln, 0);
 }
 
 void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
@@ -485,8 +549,10 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 	printf("\n");
 	printf(" Informe o número do comando: ");
 	scanf("%d", &acao);
-	while(acao<0 || acao>8){
-		printf(" Informe o número do comando: ");
+	while(acao<0 || acao>9)
+	{	
+		printf ("\n Número do comando inválido!\n");
+		printf("\n Informe o número do comando: ");
 		scanf("%d", &acao);
 	}
 
@@ -496,46 +562,52 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 		case 1:
 		grey(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 2:
 		thr(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 3:
 		blur(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 4:
 		sharp(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 5:
 		rot(img,*lmt,*cl,*ln);	
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 6:
 		amp(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 7:
 		rdz(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 8:
 		ngtv(img,*cl,*ln);
 		save(img,*lmt,*cl,*ln);
-		freememory(img,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
+		break;
+
+		case 9:
+		dtcb(img,*lmt,*cl,*ln);
+		save(img,*lmt,*cl,*ln);
+		freememory(img,*cl,*ln, 0);
 		break;
 
 		case 0:
@@ -546,7 +618,9 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 
 
 	    default :
-    	printf ("Valor invalido!\n");
+    	printf ("Valor inválido!\n");
 
 	}
 }
+
+
