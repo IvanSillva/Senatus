@@ -3,7 +3,6 @@
 #include <string.h>
 #include "tela.h"
 
-
 //Structs para os pixels
 typedef struct 
 {

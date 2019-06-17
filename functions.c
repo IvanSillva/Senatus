@@ -1,4 +1,6 @@
 #include "functions.h"
+
+
 void read()
 {
 
@@ -8,7 +10,6 @@ void read()
 	int i, j;
 	cbc();
 	
-
 	char name_archive[60];
 
 	printf(" Digite o nome do Arquivo: ");
@@ -24,10 +25,19 @@ void read()
 		scanf(" %s", name_archive);
 		archive = fopen(name_archive,"r");
 	}
+	cbc();
+	printf("\n Abrindo arquivo '%s' . \n", name_archive);
+	sleep(0.5);
+	cbc();
+	printf("\n Abrindo arquivo '%s' .. \n", name_archive);
+	sleep(0.5);
+	cbc();
+	printf("\n Abrindo arquivo '%s' ... \n", name_archive);
+	sleep(0.5);
 
 	printf("\n Arquivo '%s' aberto com sucesso! \n", name_archive);
 
-	sleep(1);
+	sleep(0.5);
 
 	fscanf(archive, "%s", cod);
 	fscanf(archive, "%d", &cl);
@@ -35,6 +45,7 @@ void read()
 	fscanf(archive, "%d", &lmt);
 
 	pxl **img;
+
 	img = (pxl**)calloc(ln,sizeof(pxl*));
 
 	for(i=0;i<ln;i++)
@@ -51,8 +62,11 @@ void read()
 			fscanf(archive,"%d", &img[i][j].B);
 		}
 	}
+
 	fclose(archive);
+
 	cmd();
+
 	options(img, cod, &lmt, &cl, &ln);
 }
 
@@ -61,7 +75,9 @@ void freememory(pxl **img, int cl, int ln, int i)
 	
     if(i<ln)
     {
+      
       free(img[i]);
+
       return freememory(img, cl, ln, i+1);
     }
     else
@@ -78,8 +94,11 @@ void save(pxl **img, int lmt, int cl, int ln)
 	printf("\n");
 	printf(" Digite o nome do novo Arquivo: ");
 	scanf("%s", name_archive);
+
 	FILE *test = fopen(name_archive,"r+");
-	while(test != NULL){
+
+	while(test != NULL)
+	{
 		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
 		printf(" Digite o nome do novo Arquivo: ");
 		scanf("%s", name_archive);
@@ -104,6 +123,16 @@ void save(pxl **img, int lmt, int cl, int ln)
 	}
 
 	fclose(archive);
+
+	cbc();
+	printf("\n Salvando arquivo '%s' . \n", name_archive);
+	sleep(0.5);
+	cbc();
+	printf("\n Salvando arquivo '%s' .. \n", name_archive);
+	sleep(0.5);
+	cbc();
+	printf("\n Salvando arquivo '%s' ... \n", name_archive);
+	sleep(0.5);
 
 	printf("\n");
 	printf(" Arquivo salvo com sucesso!\n");
@@ -229,7 +258,6 @@ void rot(pxl **img, int lmt, int cl, int ln)
 	printf(" 1 - Direita | 2 - Esquerda | 3 - Inverter\n");
 	printf("\n");
 	printf(" Informe a orientação: ");
-
 	scanf("%d", &ang);
 
 	while (ang > 3 || ang <1)
@@ -260,6 +288,7 @@ void rot(pxl **img, int lmt, int cl, int ln)
 			}
 			a++;
 		}	
+
 		save(imgrot,lmt,cl,ln);
 	}
 
@@ -271,9 +300,6 @@ void rot(pxl **img, int lmt, int cl, int ln)
 		{ 
    	 		imgrot[i] = (pxl*)calloc(ln,sizeof(pxl));
 		}
-
-
-		
 
 		for(i = cl-1, a=0; i >= 0; i--)
 		{
@@ -345,9 +371,12 @@ void rdz(pxl **img, int lmt, int cl, int ln)
 		b = 0;
 		a+=n;
 	}
+
 	cl/=n;
 	ln/=n;
+
 	save(imgred,lmt,cl,ln);
+
 	freememory(imgred,cl,ln,0);
 }
 
@@ -375,12 +404,13 @@ void amp(pxl **img, int lmt, int cl, int ln)
 		{
 
 			for(j = 0; j <= cl-1; j++)
-				{	
-				for(int w = 0; w<n; w++){
-				imgamp[a][b].R =	img[i][j].R;
-				imgamp[a][b].G =	img[i][j].G;
-				imgamp[a][b].B =	img[i][j].B;
-				b++;
+			{	
+				for(int w = 0; w<n; w++)
+				{
+					imgamp[a][b].R =	img[i][j].R;
+					imgamp[a][b].G =	img[i][j].G;
+					imgamp[a][b].B =	img[i][j].B;
+					b++;
 				}
 			}
 			b=0;
@@ -393,14 +423,17 @@ void amp(pxl **img, int lmt, int cl, int ln)
 	ln*=n;
 
 	save(imgamp,lmt,cl,ln);
+
 	freememory(imgamp,cl,ln,0);
 }
 
 void blur(pxl **img, int cl, int ln)
 {
 	int i, j, n;
+
 	printf("\n Nível de Blurring: ");
 	scanf("%d", &n);
+
  	for(int k = 0; k < n; k++)
  	{
 		for(i = 1; i < ln-1; i++)
@@ -538,6 +571,7 @@ void dtcb(pxl **img,int lmt, int cl, int ln)
 
 			}
 		}
+
 		freememory(imgb,cl,ln, 0);
 }
 
@@ -549,6 +583,7 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 	printf("\n");
 	printf(" Informe o número do comando: ");
 	scanf("%d", &acao);
+
 	while(acao<0 || acao>9)
 	{	
 		printf ("\n Número do comando inválido!\n");
