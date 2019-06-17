@@ -142,7 +142,6 @@ void save(pxl **img, int lmt, int cl, int ln)
 void grey (pxl **img, int cl, int ln)
 {
 	
-
 	int j, i;
 
 	for(i =0; i<ln; i++)
