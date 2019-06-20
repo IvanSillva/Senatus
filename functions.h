@@ -10,7 +10,7 @@ typedef struct
 }pxl;
 
 //Ler Imagem, e por na matriz.
-void read();
+void reading();
 void options(pxl **img, char *cod, int *lmt, int *cl, int*ln);
 void save(pxl **img, int lmt, int cl, int ln);
 void grey (pxl **img, int cl, int ln);

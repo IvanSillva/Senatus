@@ -1,7 +1,7 @@
 #include "functions.h"
 
 
-void read()
+void reading()
 {
 
 	char cod[3];
@@ -12,7 +12,7 @@ void read()
 	
 	char name_archive[60];
 
-	printf(" Digite o nome do Arquivo: ");
+	printf("\n██ Digite o nome do Arquivo: ");
 
 	scanf("%s", name_archive);
 
@@ -20,23 +20,15 @@ void read()
 
 	while( archive == NULL ) 
 	{
-		printf("\n !Arquivo não existente, tente novamente!\n" );
-		printf("\n Digite o nome do Arquivo: ");
+		printf("\n██ !Arquivo não existente, tente novamente! ██\n" );
+		printf("\n██ Digite o nome do Arquivo: ");
 		scanf(" %s", name_archive);
 		archive = fopen(name_archive,"r");
 	}
-	cbc();
-	printf("\n Abrindo arquivo '%s' . \n", name_archive);
-	sleep(0.5);
-	cbc();
-	printf("\n Abrindo arquivo '%s' .. \n", name_archive);
-	sleep(0.5);
-	cbc();
-	printf("\n Abrindo arquivo '%s' ... \n", name_archive);
-	sleep(0.5);
+	
+	load(name_archive, "");
 
-	printf("\n Arquivo '%s' aberto com sucesso! \n", name_archive);
-
+	printf("██ Arquivo '%s' aberto com sucesso! \n", name_archive);
 	sleep(0.5);
 
 	fscanf(archive, "%s", cod);
@@ -92,15 +84,15 @@ void save(pxl **img, int lmt, int cl, int ln)
 
 	char name_archive[60];
 	printf("\n");
-	printf(" Digite o nome do novo Arquivo: ");
+	printf("██ Digite o nome do novo Arquivo: ");
 	scanf("%s", name_archive);
 
 	FILE *test = fopen(name_archive,"r+");
 
 	while(test != NULL)
 	{
-		printf("\n !!Arquivo '%s' já existe!!\n\n", name_archive);
-		printf(" Digite o nome do novo Arquivo: ");
+		printf("\n██ !Arquivo '%s' já existe! ██\n\n", name_archive);
+		printf("██ Digite o nome do novo Arquivo: ");
 		scanf("%s", name_archive);
 		test = fopen(name_archive,"r+");
 	}
@@ -124,18 +116,10 @@ void save(pxl **img, int lmt, int cl, int ln)
 
 	fclose(archive);
 
-	cbc();
-	printf("\n Salvando arquivo '%s' . \n", name_archive);
-	sleep(0.5);
-	cbc();
-	printf("\n Salvando arquivo '%s' .. \n", name_archive);
-	sleep(0.5);
-	cbc();
-	printf("\n Salvando arquivo '%s' ... \n", name_archive);
-	sleep(0.5);
+	load(name_archive, "Salvando");
 
 	printf("\n");
-	printf(" Arquivo salvo com sucesso!\n");
+	printf("██ Arquivo salvo com sucesso!\n");
 	vsl(name_archive);
 }
 
@@ -172,7 +156,7 @@ void thr(pxl **img, int cl, int ln)
 
 	int j, i, media =0, limit;
 
-	printf("\n Valor Limite: ");
+	printf("\n██ Valor Limite: ");
 
 
 	scanf("%d", &limit);
@@ -212,7 +196,7 @@ void ngtv(pxl **img, int cl, int ln)
 
 	int j, i, media =0, limit;
 
-	printf("\n Valor Limite: ");
+	printf("\n██ Valor Limite: ");
 
 
 	scanf("%d", &limit);
@@ -254,15 +238,15 @@ void rot(pxl **img, int lmt, int cl, int ln)
 
 	int ang;
 	printf("\n");
-	printf(" 1 - Direita | 2 - Esquerda | 3 - Inverter\n");
+	printf("██ 1 - Direita | 2 - Esquerda | 3 - Inverter ██\n");
 	printf("\n");
-	printf(" Informe a orientação: ");
+	printf("██ Informe a orientação: ");
 	scanf("%d", &ang);
 
 	while (ang > 3 || ang <1)
 	{
-		printf(" Opção Invalida! \n");
-		printf(" Informe a orientação: ");
+		printf("██ Opção Invalida! ██\n");
+		printf("██ Informe a orientação: ");
 		scanf("%d", &ang);
 	}
 
@@ -344,7 +328,7 @@ void rdz(pxl **img, int lmt, int cl, int ln)
 	int i, j, n;
 	int a = 0, b = 0;
 
-	printf("\n Nivel de Redução: ");
+	printf("\n██ Nivel de Redução: ");
 	scanf("%d", &n);
 
 	pxl **imgred;
@@ -385,7 +369,7 @@ void amp(pxl **img, int lmt, int cl, int ln)
 
 	int a = 0, b = 0;
 
-	printf("\n Nivel de Ampliação: ");
+	printf("\n██ Nivel de Ampliação: ");
 	scanf("%d", &n);
 
 	pxl **imgamp;
@@ -430,7 +414,7 @@ void blur(pxl **img, int cl, int ln)
 {
 	int i, j, n;
 
-	printf("\n Nível de Blurring: ");
+	printf("\n██ Nível de Blurring: ");
 	scanf("%d", &n);
 
  	for(int k = 0; k < n; k++)
@@ -580,13 +564,13 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 	int i, j;
 	int acao;
 	printf("\n");
-	printf(" Informe o número do comando: ");
+	printf("██ Informe o número do comando: ");
 	scanf("%d", &acao);
 
 	while(acao<0 || acao>9)
 	{	
-		printf ("\n Número do comando inválido!\n");
-		printf("\n Informe o número do comando: ");
+		printf ("\n██ Número do comando inválido!\n");
+		printf("\n██ Informe o número do comando: ");
 		scanf("%d", &acao);
 	}
 
@@ -647,12 +631,12 @@ void options(pxl **img, char *cod, int *lmt, int *cl, int*ln)
 		case 0:
 		system("clear");
 		cbc();
-		printf(" Programa Encerrado!\n");
+		printf("\t\t  ██ Programa Encerrado ██\n\n");
 		break;
 
 
 	    default :
-    	printf ("Valor inválido!\n");
+    	printf ("██Valor inválido!██\n");
 
 	}
 }
