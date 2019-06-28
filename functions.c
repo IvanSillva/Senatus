@@ -26,7 +26,7 @@ void reading()
 		archive = fopen(name_archive,"r");
 	}
 	
-	load(name_archive, "");
+	load(name_archive, "Abrindo");
 
 	printf("██ Arquivo '%s' aberto com sucesso! \n", name_archive);
 	sleep(0.5);
